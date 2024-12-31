@@ -2,7 +2,7 @@
     "name": "proofread",
     "displayName": "Proofread",
     "description": "Proofread and translate text using the OpenAI API.",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "publisher": "nalgeon",
     "author": {
         "name": "Anton Zhiyanov",
