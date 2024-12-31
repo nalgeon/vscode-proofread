@@ -11,6 +11,10 @@ Notable features:
 
 ⚠️ This extension uses the OpenAI API, so you'll need an API key (the extension will ask you for it). You can get an API key in the [OpenAI Settings](https://platform.openai.com/settings/organization/api-keys). Please note that this is a **paid feature**, and OpenAI will charge you for using their API.
 
+## Installation
+
+Open the VS Code Marketplace (`Ctrl+Shift+X` / `Cmd+Shift+X`), search for the extension by typing "proofread" or "nalgeon.proofread", and click _Install_. Get an API key from OpenAI, and you're all set!
+
 ## Commands
 
 Run these commands from the VS Code command palette (`Ctrl+Shift+P` / `Cmd+Shift+P`).
