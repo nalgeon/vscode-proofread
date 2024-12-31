@@ -4,6 +4,8 @@ This extension offers _Proofread_ and _Translate_ commands in VS Code. It's a si
 
 To proofread or translate text, select it in the editor and run _Proofread: Proofread Text_ or _Proofread: Translate Text_ from the command palette. That's it!
 
+https://github.com/user-attachments/assets/f270d60f-674c-4dfb-8fef-ef22779f12bd
+
 Notable features:
 
 -   Configurable language model and prompts (with good defaults).
