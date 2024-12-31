@@ -58,12 +58,12 @@
                     "description": "Name of the OpenAI model to use."
                 },
                 "proofread.openai.temperature": {
-                    "type": "float",
+                    "type": "number",
                     "default": 0,
                     "description": "Sampling temperature to use (between 0 and 2). Higher values make the output more random, while lower values make it more focused and predictable."
                 },
                 "proofread.openai.timeout": {
-                    "type": "int",
+                    "type": "number",
                     "default": 30,
                     "description": "Timeout in seconds for OpenAI API requests."
                 },
