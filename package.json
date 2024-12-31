@@ -1,0 +1,90 @@
+{
+    "name": "proofread",
+    "displayName": "Proofread",
+    "description": "Proofread and translate text using the OpenAI API.",
+    "version": "0.1.1",
+    "publisher": "nalgeon",
+    "author": {
+        "name": "Anton Zhiyanov",
+        "url": "https://antonz.org"
+    },
+    "categories": [
+        "Other"
+    ],
+    "keywords": [
+        "grammar",
+        "proofread",
+        "spelling",
+        "translate",
+        "writing"
+    ],
+    "icon": "icon.png",
+    "galleryBanner": {
+        "color": "#000000",
+        "theme": "dark"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nalgeon/vscode-proofread.git"
+    },
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "activationEvents": [],
+    "main": "./extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "proofread.proofreadText",
+                "title": "Proofread: Proofread Text"
+            },
+            {
+                "command": "proofread.translateText",
+                "title": "Proofread: Translate Text"
+            },
+            {
+                "command": "proofread.changeApiKey",
+                "title": "Proofread: Change OpenAI API Key"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Proofread",
+            "properties": {
+                "proofread.openai.model": {
+                    "type": "string",
+                    "default": "gpt-4o",
+                    "description": "Name of the OpenAI model to use."
+                },
+                "proofread.openai.temperature": {
+                    "type": "float",
+                    "default": 0,
+                    "description": "Sampling temperature to use (between 0 and 2). Higher values make the output more random, while lower values make it more focused and predictable."
+                },
+                "proofread.openai.timeout": {
+                    "type": "int",
+                    "default": 30,
+                    "description": "Timeout in seconds for OpenAI API requests."
+                },
+                "proofread.language": {
+                    "type": "string",
+                    "default": "English (US)",
+                    "description": "The language to proofread or translate the text into."
+                },
+                "proofread.prompt.proofread": {
+                    "type": "string",
+                    "default": "Proofread the following text and fix it (if necessary) to sound like a native {} speaker. Use simple and clear language. Provide only the resulting text in response, without any additional commentary.",
+                    "description": "The prompt to send to the OpenAI API for proofreading."
+                },
+                "proofread.prompt.translate": {
+                    "type": "string",
+                    "default": "First, translate the following text into {}. Then, proofread the translated text and fix it (if necessary) to sound like a native {} speaker. Use simple and clear language. Provide only the resulting text in response, without any additional commentary.",
+                    "description": "The prompt to send to the OpenAI API for translation."
+                }
+            }
+        }
+    },
+    "dependencies": {},
+    "devDependencies": {}
+}
