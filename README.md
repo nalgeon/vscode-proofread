@@ -7,13 +7,13 @@ To proofread or translate text, select it in the editor and run _Proofread: Proo
 Notable features:
 
 -   Configurable language model and prompts (with good defaults).
--   Supports any target language provided by OpenAI (default is English).
+-   Supports many target languages (default is English).
 
-⚠️ This extension uses the OpenAI API, so you'll need an API key (the extension will ask you for it). You can get an API key in the [OpenAI Settings](https://platform.openai.com/settings/organization/api-keys). Please note that this is a **paid feature**, and OpenAI will charge you for using their API.
+⚠️ By default, this extension uses the Copilot API. It's free with a limit of 50 requests per month, or unlimited for paid Copilot subscribers. Unfortunately, Copilot only supports proofreading, not translation. To use the extension for translation, switch to the OpenAI API (see the `proofread.ai.vendor` setting below).
 
 ## Installation
 
-Open the VS Code Marketplace (`Ctrl+Shift+X` / `Cmd+Shift+X`), search for the extension by typing "proofread" or "nalgeon.proofread", and click _Install_. Get an API key from OpenAI, and you're all set!
+Open the VS Code marketplace (`Ctrl+Shift+X` / `Cmd+Shift+X`), search for the extension by typing "proofread" or "nalgeon.proofread", and click _Install_. You're all set!
 
 ## Commands
 
@@ -25,25 +25,33 @@ Proofreads the selected text and prints the suggested changes below it.
 
 **Proofread: Translate Text**
 
-Translates the selected text and overwrites it with the translation.
+Translates the selected text and overwrites it with the translation. Only available if `proofread.ai.vendor` set to `openai`.
 
-**Proofread: Change OpenAI API Key**
+**Proofread: Set OpenAI API Key**
 
-Sets the new value of the API key.
+Sets the value of the OpenAI API key. Only required if `proofread.ai.vendor` set to `openai`.
 
 ## Settings
 
-`proofread.openai.model`
+`proofread.ai.vendor`
 
-Name of the OpenAI model to use. Default: `gpt-4o`
+Name of the AI model provider. Must be either `copilot` or `openai`. Default: `copilot`
 
-`proofread.openai.temperature`
+To use both proofreading and translation, change this setting to `openai`. You'll need an API key from the [OpenAI Settings](https://platform.openai.com/account/api-keys). When you have the key, set it using the _Proofread: Set OpenAI API Key_ command.
+
+Please note that using OpenAI is a **paid feature**; they will charge you for using the API.
+
+`proofread.ai.model`
+
+Name of the AI model to use. Default: `gpt-4o`
+
+`proofread.ai.temperature`
 
 Sampling temperature to use (between 0 and 2). Higher values make the output more random, while lower values make it more focused and predictable. Default: `0`
 
-`proofread.openai.timeout`
+`proofread.ai.timeout`
 
-Timeout in seconds for OpenAI API requests. Default: `30`
+Timeout for AI API requests in seconds. Default: `30`
 
 `proofread.language`
 

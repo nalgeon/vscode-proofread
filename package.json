@@ -44,28 +44,37 @@
                 "title": "Proofread: Translate Text"
             },
             {
-                "command": "proofread.changeApiKey",
-                "title": "Proofread: Change OpenAI API Key"
+                "command": "proofread.setApiKey",
+                "title": "Proofread: Set OpenAI API Key"
             }
         ],
         "configuration": {
             "type": "object",
             "title": "Proofread",
             "properties": {
-                "proofread.openai.model": {
+                "proofread.ai.vendor": {
+                    "type": "string",
+                    "enum": [
+                        "copilot",
+                        "openai"
+                    ],
+                    "default": "copilot",
+                    "description": "Name of the AI model provider. Must be either 'copilot' or 'openai'."
+                },
+                "proofread.ai.model": {
                     "type": "string",
                     "default": "gpt-4o",
-                    "description": "Name of the OpenAI model to use."
+                    "description": "Name of the AI model to use."
                 },
-                "proofread.openai.temperature": {
+                "proofread.ai.temperature": {
                     "type": "number",
                     "default": 0,
                     "description": "Sampling temperature to use (between 0 and 2). Higher values make the output more random, while lower values make it more focused and predictable."
                 },
-                "proofread.openai.timeout": {
+                "proofread.ai.timeout": {
                     "type": "number",
                     "default": 30,
-                    "description": "Timeout in seconds for OpenAI API requests."
+                    "description": "Timeout for AI API requests in seconds."
                 },
                 "proofread.language": {
                     "type": "string",
