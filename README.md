@@ -1,15 +1,14 @@
 # Proofread and translate text in VS Code
 
-This extension offers _Proofread_ and _Translate_ commands in VS Code. It's a simple alternative to DeepL, Grammarly, and other similar tools.
-
-To proofread or translate text, select it in the editor and run _Proofread: Proofread Text_ or _Proofread: Translate Text_ from the command palette. That's it!
+This extension offers _Proofread text_ and _Translate text_ commands in VS Code. It's a simple alternative to DeepL, Grammarly, and other similar tools.
 
 Notable features:
 
+-   Uses Copilot, Ollama, or OpenAI for proofreading.
 -   Configurable language model and prompts (with good defaults).
 -   Supports many target languages (default is English).
 
-⚠️ By default, this extension uses the Copilot API. It's free with a limit of 50 requests per month, or unlimited for paid Copilot subscribers. Unfortunately, Copilot only supports proofreading, not translation. To use the extension for translation, switch to the OpenAI API (see the `proofread.ai.vendor` setting below).
+⚠️ By default, this extension uses the Copilot API. It's free with a limit of 50 requests per month, or unlimited for paid Copilot subscribers. Unfortunately, Copilot only supports proofreading, not translation. To use the extension for translation, switch to Ollama or OpenAI (see details below).
 
 ## Installation
 
@@ -31,15 +30,59 @@ Translates the selected text and overwrites it with the translation. Only availa
 
 Sets the value of the OpenAI API key. Only required if `proofread.ai.vendor` set to `openai`.
 
+## Using Ollama
+
+Ollama runs AI models locally on your machine. Here's how to set it up:
+
+1. Download and install [Ollama](https://ollama.com/) for your operating system.
+2. Set the [environment variables](https://github.com/ollama/ollama/blob/main/docs/faq.md#how-do-i-configure-ollama-server) to use less memory:
+
+```
+OLLAMA_KEEP_ALIVE = 1h
+OLLAMA_FLASH_ATTENTION = 1
+```
+
+3. Restart Ollama.
+4. Download and load the AI model Gemma 2:
+
+```
+ollama run gemma2:2b
+```
+
+5. Change the Proofread settings:
+
+```
+proofread.ai.vendor = ollama
+proofread.ai.model = gemma2:2b
+```
+
+That's it!
+
+Gemma 2 is a lightweight model that uses about 1GB of memory and works quickly without a GPU. For good results, send only a few paragraphs at a time for proofreading or translation.
+
+For larger documents or improved results, try models like `mistral` or `mistral-nemo`.
+
+## Using OpenAI
+
+OpenAI offers state-of-the-art AI models through an API. Here's how to switch to it:
+
+1. Get an API key from the [OpenAI Settings](https://platform.openai.com/account/api-keys).
+2. When you have the key, set it using the _Proofread: Set OpenAI API Key_ command.
+3. Change the Proofread setting `proofread.ai.vendor` to `openai`.
+
+That's it!
+
+⚠️ OpenAI is a **paid service**; they charge for API use.
+
 ## Settings
 
 `proofread.ai.vendor`
 
-Name of the AI model provider. Must be either `copilot` or `openai`. Default: `copilot`
+Name of the AI model provider. Must be either `copilot`, `ollama`, or `openai`. Default: `copilot`
 
-To use both proofreading and translation, change this setting to `openai`. You'll need an API key from the [OpenAI Settings](https://platform.openai.com/account/api-keys). When you have the key, set it using the _Proofread: Set OpenAI API Key_ command.
+`proofread.ai.url`
 
-Please note that using OpenAI is a **paid feature**; they will charge you for using the API.
+Custom URL of the AI API endpoint (leave empty to use the default URL).
 
 `proofread.ai.model`
 

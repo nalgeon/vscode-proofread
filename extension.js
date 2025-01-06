@@ -7,6 +7,7 @@ module.exports = {
 const log = vscode.window.createOutputChannel("Proofread");
 const askers = {
     copilot: askCopilot,
+    ollama: askOllama,
     openai: askOpenAI,
 };
 
@@ -78,9 +79,9 @@ async function translate(context) {
     const selectedText = editor.document.getText(selection);
 
     const vendor = config.get("ai.vendor");
-    if (vendor !== "openai") {
+    if (vendor === "copilot") {
         vscode.window.showErrorMessage(
-            "Translation is only supported with OpenAI. Change the 'proofread.ai.vendor' setting to 'openai' or refer to the readme for more details."
+            "Translation is not supported with Copilot. Change the 'proofread.ai.vendor' setting to another provider (see the readme for details)."
         );
         return;
     }
@@ -148,6 +149,60 @@ async function askCopilot(context, prompt, query) {
     return responseText;
 }
 
+async function askOllama(context, prompt, query) {
+    const config = vscode.workspace.getConfiguration("proofread");
+
+    const defaultUrl = "http://localhost:11434/api/chat";
+    const url = config.get("ai.url") || defaultUrl;
+
+    const modelName = config.get("ai.model");
+    const temperature = config.get("ai.temperature");
+
+    const language = config.get("language");
+    prompt = prompt.replace("{}", language);
+
+    const controller = new AbortController();
+    const timeoutSec = config.get("ai.timeout");
+    const timeoutId = setTimeout(() => controller.abort(), timeoutSec * 1000);
+
+    log.appendLine(
+        `Asking Ollama: model=${modelName}, temperature=${temperature}, prompt_len=${prompt.length}, query_len=${query.length}`
+    );
+
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            model: modelName,
+            options: {
+                temperature: temperature,
+            },
+            stream: false,
+            messages: [
+                {
+                    role: "system",
+                    content: prompt,
+                },
+                {
+                    role: "user",
+                    content: query,
+                },
+            ],
+        }),
+        signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    const data = await response.json();
+    if (data.error) {
+        throw new Error(data.error);
+    }
+    return data.message.content.trim();
+}
+
 async function askOpenAI(context, prompt, query) {
     const apikey = await context.secrets.get("proofread.ai.apikey");
     if (!apikey) {
@@ -157,6 +212,10 @@ async function askOpenAI(context, prompt, query) {
     }
 
     const config = vscode.workspace.getConfiguration("proofread");
+
+    const defaultUrl = "https://api.openai.com/v1/chat/completions";
+    const url = config.get("ai.url") || defaultUrl;
+
     const modelName = config.get("ai.model");
     const temperature = config.get("ai.temperature");
 
@@ -171,7 +230,7 @@ async function askOpenAI(context, prompt, query) {
         `Asking OpenAI: model=${modelName}, temperature=${temperature}, prompt_len=${prompt.length}, query_len=${query.length}`
     );
 
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

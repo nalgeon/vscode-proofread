@@ -56,10 +56,16 @@
                     "type": "string",
                     "enum": [
                         "copilot",
+                        "ollama",
                         "openai"
                     ],
                     "default": "copilot",
-                    "description": "Name of the AI model provider. Must be either 'copilot' or 'openai'."
+                    "description": "Name of the AI model provider. Must be either 'copilot', 'ollama', or 'openai'."
+                },
+                "proofread.ai.url": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Custom URL of the AI API endpoint (leave empty to use the default URL)."
                 },
                 "proofread.ai.model": {
                     "type": "string",
