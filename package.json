@@ -1,7 +1,7 @@
 {
     "name": "proofread",
     "displayName": "Proofread",
-    "description": "Proofread and translate text using the OpenAI API.",
+    "description": "Proofread and translate text using AI.",
     "version": "0.2.0",
     "publisher": "nalgeon",
     "author": {
@@ -84,12 +84,12 @@
                 "proofread.prompt.proofread": {
                     "type": "string",
                     "default": "Proofread the following text and fix it (if necessary) to sound like a native {} speaker. Use the following guidelines:\n\n1. Brevity: Use concise language and eliminate unnecessary words.\n2. Clarity: Write clearly and make sure your meaning is easily understood.\n3. Consistency: Maintain consistent style and structure throughout your writing.\n4. Active Voice: Prefer the active voice over passive for stronger writing.\n5. Definite Language: Use specific, definite, and concrete language.\n6. Omit Needless Words: Remove words that do not add value to the sentence.\n\nProvide only the resulting text in response, without any additional commentary.",
-                    "description": "The prompt to send to the OpenAI API for proofreading."
+                    "description": "The prompt to send to the AI for proofreading."
                 },
                 "proofread.prompt.translate": {
                     "type": "string",
-                    "default": "First, translate the following text into {}. Then, proofread the translated text and fix it (if necessary) to sound like a native {} speaker.\n\nUse the following guidelines:\n\n1. Brevity: Use concise language and eliminate unnecessary words.\n2. Clarity: Write clearly and make sure your meaning is easily understood.\n3. Consistency: Maintain consistent style and structure throughout your writing.\n4. Active Voice: Prefer the active voice over passive for stronger writing.\n5. Definite Language: Use specific, definite, and concrete language.\n6. Omit Needless Words: Remove words that do not add value to the sentence.\n\nProvide only the resulting text in response, without any additional commentary.",
-                    "description": "The prompt to send to the OpenAI API for translation."
+                    "default": "Translate the following text into {}. Use simple and clear language. Provide only the resulting text in response, without any additional commentary.",
+                    "description": "The prompt to send to the AI for translation."
                 }
             }
         }
