@@ -2,7 +2,7 @@
     "name": "proofread",
     "displayName": "Proofread",
     "description": "Proofread and translate text using AI.",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "publisher": "nalgeon",
     "author": {
         "name": "Anton Zhiyanov",
