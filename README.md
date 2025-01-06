@@ -43,10 +43,10 @@ OLLAMA_FLASH_ATTENTION = 1
 ```
 
 3. Restart Ollama.
-4. Download and load the AI model Gemma 2:
+4. Download the AI model Gemma 2:
 
 ```
-ollama run gemma2:2b
+ollama pull gemma2:2b
 ```
 
 5. Change the Proofread settings:
