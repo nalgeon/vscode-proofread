@@ -85,9 +85,14 @@ async function translate(context) {
         );
         return;
     }
+    const ask = askers[vendor];
+    if (!ask) {
+        vscode.window.showErrorMessage(`No such vendor: ${vendor}`);
+        return;
+    }
 
     try {
-        const result = await askOpenAI(context, prompt, selectedText);
+        const result = await ask(context, prompt, selectedText);
         editor.edit((editBuilder) => {
             editBuilder.replace(selection, result);
         });
