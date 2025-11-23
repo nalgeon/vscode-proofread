@@ -15,7 +15,7 @@ async function activate(context) {
     let proofreadCmd = vscode.commands.registerCommand(
         "proofread.proofreadText",
         async () => {
-            await proofread(context);
+            await answer(context, "proofread", false);
         }
     );
     context.subscriptions.push(proofreadCmd);
@@ -23,10 +23,18 @@ async function activate(context) {
     let translateCmd = vscode.commands.registerCommand(
         "proofread.translateText",
         async () => {
-            await translate(context);
+            await answer(context, "translate", true);
         }
     );
     context.subscriptions.push(translateCmd);
+
+    let grammarCmd = vscode.commands.registerCommand(
+        "proofread.checkGrammar",
+        async () => {
+            await answer(context, "grammar", false);
+        }
+    );
+    context.subscriptions.push(grammarCmd);
 
     let changeApiKeyCmd = vscode.commands.registerCommand(
         "proofread.setApiKey",
@@ -37,14 +45,14 @@ async function activate(context) {
     context.subscriptions.push(changeApiKeyCmd);
 }
 
-async function proofread(context) {
+async function answer(context, promptName, replace = false) {
     const editor = vscode.window.activeTextEditor;
     if (!editor) {
         return;
     }
 
     const config = vscode.workspace.getConfiguration("proofread");
-    const prompt = config.get("prompt.proofread");
+    const prompt = config.get(`prompt.${promptName}`);
 
     const selection = editor.selection;
     const selectedText = editor.document.getText(selection);
@@ -59,42 +67,11 @@ async function proofread(context) {
     try {
         const result = await ask(context, prompt, selectedText);
         editor.edit((editBuilder) => {
-            editBuilder.insert(selection.end, `\n\n${result}`);
-        });
-    } catch (error) {
-        vscode.window.showErrorMessage(`Error: ${error.message}`);
-    }
-}
-
-async function translate(context) {
-    const editor = vscode.window.activeTextEditor;
-    if (!editor) {
-        return;
-    }
-
-    const config = vscode.workspace.getConfiguration("proofread");
-    const prompt = config.get("prompt.translate");
-
-    const selection = editor.selection;
-    const selectedText = editor.document.getText(selection);
-
-    const vendor = config.get("ai.vendor");
-    if (vendor === "copilot") {
-        vscode.window.showErrorMessage(
-            "Translation is not supported with Copilot. Change the 'proofread.ai.vendor' setting to another provider (see the readme for details)."
-        );
-        return;
-    }
-    const ask = askers[vendor];
-    if (!ask) {
-        vscode.window.showErrorMessage(`No such vendor: ${vendor}`);
-        return;
-    }
-
-    try {
-        const result = await ask(context, prompt, selectedText);
-        editor.edit((editBuilder) => {
-            editBuilder.replace(selection, result);
+            if (replace) {
+                editBuilder.replace(selection, result);
+            } else {
+                editBuilder.insert(selection.end, `\n\n${result}`);
+            }
         });
     } catch (error) {
         vscode.window.showErrorMessage(`Error: ${error.message}`);

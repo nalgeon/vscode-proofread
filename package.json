@@ -44,6 +44,10 @@
                 "title": "Proofread: Translate Text"
             },
             {
+                "command": "proofread.checkGrammar",
+                "title": "Proofread: Check Grammar"
+            },
+            {
                 "command": "proofread.setApiKey",
                 "title": "Proofread: Set OpenAI API Key"
             }
@@ -69,12 +73,12 @@
                 },
                 "proofread.ai.model": {
                     "type": "string",
-                    "default": "gpt-4o",
+                    "default": "gpt-5-mini",
                     "description": "Name of the AI model to use."
                 },
                 "proofread.ai.temperature": {
                     "type": "number",
-                    "default": 0,
+                    "default": 1,
                     "description": "Sampling temperature to use (between 0 and 2). Higher values make the output more random, while lower values make it more focused and predictable."
                 },
                 "proofread.ai.timeout": {
@@ -96,6 +100,11 @@
                     "type": "string",
                     "default": "Translate the following text into {}. Use simple and clear language. Provide only the resulting text in response, without any additional commentary.",
                     "description": "The prompt to send to the AI for translation."
+                },
+                "proofread.prompt.grammar": {
+                    "type": "string",
+                    "default": "Check the following text for grammar mistakes and correct them. Provide only the resulting text in response, without any additional commentary.",
+                    "description": "The prompt to send to the AI for grammar checking."
                 }
             }
         }

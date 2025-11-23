@@ -1,6 +1,6 @@
 # Proofread and translate text in VS Code
 
-This extension offers _Proofread text_ and _Translate text_ commands in VS Code. It's a simple alternative to DeepL, Grammarly, and other similar tools.
+This extension offers _Proofread_, _Translate_ and _Check Grammar_ commands in VS Code. It's a simple alternative to DeepL, Grammarly, and other similar tools.
 
 Notable features:
 
@@ -8,7 +8,7 @@ Notable features:
 -   Configurable language model and prompts (with good defaults).
 -   Supports many target languages (default is English).
 
-⚠️ By default, this extension uses the Copilot API. It's free with a limit of 50 requests per month, or unlimited for paid Copilot subscribers. Unfortunately, Copilot only supports proofreading, not translation. To use the extension for translation, switch to Ollama or OpenAI (see details below).
+⚠️ By default, this extension uses the Copilot API. It's free with a limit of 50 requests per month, or unlimited for paid Copilot subscribers. You can also switch to Ollama or OpenAI (see details below).
 
 ## Installation
 
@@ -24,7 +24,11 @@ Proofreads the selected text and prints the suggested changes below it.
 
 **Proofread: Translate Text**
 
-Translates the selected text and overwrites it with the translation. Only available if `proofread.ai.vendor` set to `openai`.
+Translates the selected text and overwrites it with the translation.
+
+**Proofread: Check Grammar**
+
+Checks the selected text for grammar mistakes, corrects them, and prints the revised version below.
 
 **Proofread: Set OpenAI API Key**
 
@@ -43,24 +47,20 @@ OLLAMA_FLASH_ATTENTION = 1
 ```
 
 3. Restart Ollama.
-4. Download the AI model Gemma 2:
+4. Download a lightweight AI model like `gemma3:4b` or `qwen3:4b`:
 
 ```
-ollama pull gemma2:2b
+ollama pull gemma3:4b
 ```
 
 5. Change the Proofread settings:
 
 ```
 proofread.ai.vendor = ollama
-proofread.ai.model = gemma2:2b
+proofread.ai.model = gemma3:4b
 ```
 
 That's it!
-
-Gemma 2 is a lightweight model that uses about 1GB of memory and works quickly without a GPU. For good results, send only a few paragraphs at a time for proofreading or translation.
-
-For larger documents or improved results, try models like `mistral` or `mistral-nemo`.
 
 ## Using OpenAI
 
@@ -86,11 +86,11 @@ Custom URL of the AI API endpoint (leave empty to use the default URL).
 
 `proofread.ai.model`
 
-Name of the AI model to use. Default: `gpt-4o`
+Name of the AI model to use. Default: `gpt-5-mini`
 
 `proofread.ai.temperature`
 
-Sampling temperature to use (between 0 and 2). Higher values make the output more random, while lower values make it more focused and predictable. Default: `0`
+Sampling temperature to use (between 0 and 2). Higher values make the output more random, while lower values make it more focused and predictable. Default: `1`
 
 `proofread.ai.timeout`
 
@@ -102,11 +102,15 @@ The language to proofread or translate the text into. Default: `English (US)`
 
 `proofread.prompt.proofread`
 
-The prompt to send to the OpenAI API for proofreading.
+The prompt to send to the AI for proofreading.
 
 `proofread.prompt.translate`
 
-The prompt to send to the OpenAI API for translation.
+The prompt to send to the AI for translation.
+
+`proofread.prompt.grammar`
+
+The prompt to send to the AI for grammar checking.
 
 ## License
 
